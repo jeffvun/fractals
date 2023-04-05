@@ -1,32 +1,24 @@
 import matplotlib.pyplot as plt
 
-def t_square(x, y, size, n):
+def t_square(n, x, y, w):
     if n == 0:
-        return [(x, y)]
+        return
     else:
-        points = t_square(x, y, size/3, n-1)
-        new_points = []
-        for i in range(len(points)-1):
-            x1, y1 = points[i]
-            x2, y2 = points[i+1]
-            dx, dy = x2 - x1, y2 - y1
-            new_dx = dy
-            new_dy = -dx
-            new_x1, new_y1 = x1 + dx/3, y1 + dy/3
-            new_x2, new_y2 = x2 - dx/3, y2 - dy/3
-            new_x, new_y = new_x1 + new_dx/3, new_y1 + new_dy/3
-            new_points.extend([(x1, y1), (new_x1, new_y1), (new_x, new_y), (new_x2, new_y2)])
-        new_points.append(points[-1])
-        return new_points
+        plt.plot([x, x+w, x+w, x, x], [y, y, y+w, y+w, y], 'k')
+        new_w = w/3
+        t_square(n-1, x+new_w, y+new_w, new_w)
+        t_square(n-1, x+new_w, y+new_w*4, new_w)
+        t_square(n-1, x+new_w*4, y+new_w*4, new_w)
+        t_square(n-1, x+new_w*4, y+new_w, new_w)
+
+# Set up the figure
+fig, ax = plt.subplots(figsize=(8, 8))
+ax.axis('off')
 
 # Generate the T-Square fractal
 n = 5
-points = t_square(0, 0, 100, n)
+w = 2**n
+t_square(n, 0, 0, w)
 
-# Plot the T-Square fractal
-x, y = zip(*points)
-fig, ax = plt.subplots(figsize=(8, 6))
-ax.plot(x, y, linewidth=1, color='blue')
-ax.axis('equal')
-ax.axis('off')
+# Show the T-Square fractal
 plt.show()
