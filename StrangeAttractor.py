@@ -33,7 +33,8 @@ xs, ys, zs = rk4(lorenz, x0, y0, z0)
 
 # Plot 3D trajectory
 fig = plt.figure()
-ax = fig.gca(projection='3d')
+# ax = fig.gca(projection='3d')
+ax = fig.add_subplot(111, projection='3d')
 ax.plot(xs, ys, zs, lw=0.5)
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
